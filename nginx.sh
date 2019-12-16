@@ -39,7 +39,9 @@ then
     exit 1
 fi
 
-echo "Nginx successfully configured."
-rm "${0}"
+# Reload settings
+sudo systemctl reload nginx
 
-## 0b4c8e73+
+echo "Nginx successfully configured."
+ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")";
+rm "${ABSOLUTE_PATH}"
