@@ -15,6 +15,13 @@ if [ "" == "$GIT_INSTALLED" ]; then
  apt-get install -y $GIT -qq
 fi
 
+if [[ ${?} -ne 0 ]]
+then
+  echo "Could not install GIT."
+  exit 1
+fi
+
+
 # MongoDB https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 MONGO_INSTALLED=$(dpkg-query -W --showformat='${Status}\n' $MONGO | grep "install ok installed")
 echo "Checking for $MONGO: $MONGO_INSTALLED"
@@ -28,12 +35,24 @@ if [ "" == "$MONGO_INSTALLED" ]; then
  sudo service mongod start
 fi
 
+if [[ ${?} -ne 0 ]]
+then
+  echo "Could not install and startup MongoDB."
+  exit 1
+fi
+
 # Node.js
 NODE_INSTALLED=$(dpkg-query -W --showformat='${Status}\n' $NODE | grep "install ok installed")
 echo "Checking for $NODE: $NODE_INSTALLED"
 if [ "" == "$NODE_INSTALLED" ]; then
  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
  apt-get install -y build-essential nodejs -qq
+fi
+
+if [[ ${?} -ne 0 ]]
+then
+  echo "Could not install NodeJS."
+  exit 1
 fi
 
 # Yarn
@@ -44,6 +63,22 @@ if [ "" == "$YARN_INSTALLED" ]; then
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
   sudo apt-get update -qq
   sudo apt-get install -y yarn -qq
+fi
+
+if [[ ${?} -ne 0 ]]
+then
+  echo "Could not install Yarn."
+  exit 1
+fi
+
+# Pm2
+# No harm in repeat installation...
+yarn global add pm2
+
+if [[ ${?} -ne 0 ]]
+then
+  echo "Could not install Yarn."
+  exit 1
 fi
 
 echo "Provisioning complete."

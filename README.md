@@ -1,4 +1,4 @@
-These scripts set up an environment for a node server running on Ubuntu 18.04 on Digital Ocean
+These scripts set up an environment for a node server running on Ubuntu 18.04 on Digital Ocean.
 
 # setup.sh
 
@@ -8,7 +8,7 @@ Requires logging back out and in with the user to reconfigure the password.
 # services.sh 
 
 This runs all of the installations necessary for a basic node.js app.
-It installs Node.js, MongoDB, Yarn, and Git.
+It installs Node.js, MongoDB, Yarn, PM2, and Git.
 
 # nginx.sh
 
