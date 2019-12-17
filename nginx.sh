@@ -1,34 +1,87 @@
 #!/bin/bash
+usage(){
+    echo "${0} IP_ADDRESS DOMAIN PORT";
+    exit 1
+};
+
+# Modify and replace placeholders in my_server file.
+IP_ADDRESS="${1}"
+DOMAIN="${2}"
+PORT="${3}"
+
+if [[ $((PORT)) != $PORT ]]; then
+    echo "Port is not a number."
+    usage
+fi
+
+if [[ ! $IP_ADDRESS =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+then
+    echo "IP Address is not valid."
+    usage
+fi
 
 echo "Configuring Nginx..."
-
 sudo apt-get update -qq
 sudo apt-get install nginx --yes
 
-sleep 15
-sudo ufw allow 'Nginx HTTP'
-
 if [[ $? -ne 0 ]]
 then
-    echo "Nginx could not be configured."
+    echo "Nginx could not be installed."
+    exit 1
+fi
+
+sed -i "s/IP_ADDRESS/${IP_ADDRESS}/g" my_server;
+if [[ $? -ne 0 ]]
+then
+    echo "IP_ADDRESS ${IP_ADDRESS} could not be added to my_server."
+    exit 1
+fi
+
+sed -i "s/DOMAIN/${2}/g" my_server;
+if [[ $? -ne 0 ]]
+then
+    echo "DOMAIN ${DOMAIN} could not be added to my_server"
+    exit 1
+fi
+
+sed -i "s/PORT/${3}/g" my_server;
+if [[ $? -ne 0 ]]
+then
+    echo "PORT ${PORT} could not be added to my_server"
+    exit 1
+fi
+
+# Move to folder and create symlink...
+sudo mv my_server /etc/nginx/sites-available/my_server # Move new file into nginx's server directory...
+cd /etc/nginx/sites-enabled
+sudo ln -s ../sites-available/my_server
+
+# Configure firewall
+sudo ufw allow "Open SSH"
+
+if [[ "${?}" -ne 0 ]]
+then
+    echo "Could not configure firewall. Current UFW status:"
+    sudo ufw status
+    exit 1
+fi
+
+sudo ufw allow "Nginx Full"
+
+if [[ "${?}" -ne 0 ]]
+then
+    echo "Could not configure firewall. Current UFW status:"
+    sudo ufw status
     exit 1
 fi
 
 # Remove old server block and symlink...
-sudo rm /etc/nginx/sites-available/default
-sudo rm /etc/nginx/sites-enabled/default
-
+sudo rm /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 if [[ $? -ne 0 ]]
 then
     echo "Could not remove old server bloc."
     exit 1
 fi
-
-sudo mv my_server /etc/nginx/sites-available/my_server # Move new file into nginx's server directory...
-
-# Create symlink to enabled sites...
-cd /etc/nginx/sites-enabled
-sudo ln -s ../sites-available/my_server
 
 # Test config...
 sudo nginx -t 
