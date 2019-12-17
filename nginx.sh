@@ -57,7 +57,7 @@ cd /etc/nginx/sites-enabled
 sudo ln -s ../sites-available/my_server
 
 # Configure firewall
-sudo ufw allow "Open SSH"
+sudo ufw allow ssh
 
 if [[ "${?}" -ne 0 ]]
 then
