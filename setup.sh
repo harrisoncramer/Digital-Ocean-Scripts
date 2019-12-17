@@ -81,4 +81,3 @@ then
 fi
 
 echo "User setup completed."
-rm "${0}";

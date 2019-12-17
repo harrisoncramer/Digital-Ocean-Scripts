@@ -99,5 +99,4 @@ fi
 sudo systemctl reload nginx
 
 echo "Nginx successfully configured."
-ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")";
-rm "${ABSOLUTE_PATH}"
+rm "${0}"
