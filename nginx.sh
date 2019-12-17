@@ -75,6 +75,9 @@ then
     exit 1
 fi
 
+sudo ufw enable # Turn on firewall...
+
+
 # Remove old server block and symlink...
 sudo rm /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 if [[ $? -ne 0 ]]
