@@ -1,6 +1,6 @@
 # Script sets up DigitalOcean Nginx Reverse Proxy Server
 # Can install MongoDB (optional), and Yarn.
-
+#!/bin/bash
 usage(){
     echo "Usage: ${0} [-my] USERNAME" >&2
     exit 1
