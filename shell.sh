@@ -4,16 +4,19 @@
 chsh -s /bin/bash
 
 # Install Neovim
+sudo apt update
 sudo apt install neovim
 
 # Configure Neovim to use .vimrc file
-mkdir ~/.config/nvim
+mkdir -p ~/.config/nvim
 touch ~/.config/nvim/init.vim
 
+# Tell 
+
 # Let NVIM and VIM share configuration files
-echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after" >> ~/.vimrc
-echo "let &packpath=&runtimepath" >> ~/.vimrc
-source ~/.vimrc
+echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after" >> ~/.config/nvim/init.vim
+echo "let &packpath=&runtimepath" >> ~/.config/nvim/init.vim
+echo "source ~/.vimrc" >> ~/.config/nvim/init.vim
 
 # Install vim-plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
