@@ -1,20 +1,22 @@
-These scripts set up an environment for a node server running on Ubuntu 18.04 on Digital Ocean. They should be run in order.
+These scripts set up an environment for a node server running on Ubuntu 18.04 on Digital Ocean. They should be run in order. The scripts assume you are running Ubuntu 18.04, and have not configured anything on the machine. You can clone this to the machine using HTTPS, because your SSH keys will not be configured.
 
 # setup.sh
-
 Setup creates a user, provides the user with sudo privileges, and sets an automatic password.
-Requires logging back out and in with the user to reconfigure the password.
+
+# shell.sh
+After logging back in, change to user and set defualt shell to bash and configure nvim 
+
+`Logout and reconfigure with custom password`
 
 # mongodb.sh
+Installs version 4.2 of mongodb and runs as a service. 
+`You must subsequently configure the MongoDB server with user controlled access.`
 
-Installs version 4.2 of mongodb and runs as a service. You must subsequently configure the MongoDB server with user controlled access.
+# ssh.sh
+Creates a new SSH key and adds it to the ssh-agent. 
+`You must manually then add this ssh key to your Github account (https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)`
 
-# Vim Plug
-Installs vim-plug for managing plugins.
-
-
-# services.sh 
-
+# packages.sh 
 This runs all of the installations necessary for a basic node.js app.
 It installs Node.js, MongoDB, Yarn, PM2, and Git.
 
