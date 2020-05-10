@@ -5,7 +5,7 @@ chsh -s /bin/bash
 
 # Install Neovim
 sudo apt update
-sudo apt install neovim
+sudo apt install neovim -y
 
 # Configure Neovim to use .vimrc file
 mkdir -p ~/.config/nvim
@@ -23,4 +23,4 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # Move .vimrc file to correct location
-mv /reference/.vimrc ~/.vimrc
+mv ./reference/.vimrc ~/.vimrc
