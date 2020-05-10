@@ -6,6 +6,7 @@ Setup creates a user, provides the user with sudo privileges, and sets an automa
 # shell.sh
 After logging back in, change to user and set defualt shell to bash and configure nvim 
 `Logout and log back in to reconfigure with custom password`
+`Make sure you change the default shell (chsh -s /bin/bash)`
 
 # node.sh
 Installs nvm and node.js version 13.7.0 and sets up user to automatically use those versions
