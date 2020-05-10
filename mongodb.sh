@@ -7,14 +7,14 @@ fi
 # Digital Ocean comes pre-installed with MongoDB 3.6 We must uninstall that prior to our installation (see: https://docs.mongodb.com/manual/reference/installation-ubuntu-community-troubleshooting/#errors-when-running-sudo-apt-install-y-mongodb-org)
 # "Unable to install package due to dpkg-deb: error"
 # To see installed MONGODB packages, run: sudo apt list --installed | grep mongo
-sudo apt remove mongodb
-sudo apt purge mongodb
-sudo apt autoremove
+sudo apt remove mongodb -y
+sudo apt purge mongodb -y
+sudo apt autoremove -y
 
 # Install MongoDB Community Edition 
 wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y mongodb-org
 sudo systemctl start mongod
 
