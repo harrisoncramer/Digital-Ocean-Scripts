@@ -26,8 +26,13 @@ Creates a new SSH key and adds it to the ssh-agent.
 `You must manually then add this ssh key to your Github account (https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account)`
 
 # packages.sh 
-This runs all of the installations necessary for a basic node.js app.
-It installs Node.js, MongoDB, Yarn, PM2, and Git.
+This is a collection of useful applications for development on the Ubuntu server. It includes:
+1) yarn: Package management
+2) pm2: Process manager
+3) artillery: Load tester for Nginx server 
+3) goaccess: Log management tool**
+
+**Can be configured to provide real-time logs on Nginx server, by building html file and then serving that file via Nginx. (goaccess access.log -o /var/www/html/report.html --log-format=COMBINED --real-time-html)
 
 # nginx.sh
 
