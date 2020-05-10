@@ -3,7 +3,7 @@ These scripts set up an environment for a node server running on Ubuntu 18.04 on
 # setup.sh
 Setup creates a user, provides the user with sudo privileges, and sets an automatic password.
 
-# shell.sh
+# nvim.sh
 After logging back in, change to user and set defualt shell to bash and configure nvim 
 `Logout and log back in to reconfigure with custom password`
 `Make sure you change the default shell (chsh -s /bin/bash)`
