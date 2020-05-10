@@ -16,7 +16,10 @@ Installs nvm and node.js version 13.7.0 and sets up user to automatically use th
 
 # mongodb.sh
 Installs version 4.2 of mongodb and runs as a service. 
-`You must subsequently configure the MongoDB server with user controlled access.`
+`You must subsequently configure the MongoDB server with user controlled access in /etc/mongod.conf`
+Format (w/in admin db): db.createUser({ user: 'admin', pwd: 'password', roles: [{ role 'userAdminAnyDatabase', db: 'admin' }] })
+Then in the /etc/mongod.conf file, uncomment #security, and below it, add the following ––> authorization: enabled
+Restart Mongodb with `sudo systemctl restart mongod`
 
 # ssh.sh
 Creates a new SSH key and adds it to the ssh-agent. 

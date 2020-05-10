@@ -21,7 +21,11 @@ sudo systemctl start mongod
 # Run MongoDB as a service
 sudo systemctl start mongod
 
-echo "MongoDb Installed. Must configure a user admin and then enable access control in /etc/mongod.conf"
-echo "Format (w/in admin db): db.createUser({ user: 'admin', pwd: 'password', roles: [{ role 'userAdminAnyDatabase', db: 'admin' }] })"
-echo "Then in the /etc/mongod.conf file, uncomment #security, and below it, add the following ––> authorization: enabled"
-echo "Restart Mongodb with sudo systemctl restart mongod"
+# Check that MongoDB is running
+isRunning=$(sudo systemctl status mongod | grep active | wc -l)
+if [[ $isRunning -eq 1 ]]; then
+  echo "MongoDB installed and running!"
+  exit 0
+else
+  echo "MongoDB could not be installed/run"
+fi
