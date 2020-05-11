@@ -59,7 +59,7 @@ Group=root
 Restart=always 
 EOF
 
-sudo echo "ExecStart=${goaccessScript}"
+sudo echo "ExecStart=${goaccessScript}" >> "$serviceFile";
 
 sudo cat <<EOF >> "$serviceFile"
 StandardOutput=null 
