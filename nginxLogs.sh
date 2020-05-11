@@ -42,7 +42,7 @@ sudo echo "sudo goaccess /var/log/nginx/access.log -o "${rootFolder}/report.html
 
 # Adding systemd log script
 echo "Creating goaccess.service at /etc/systemd/system/goaccess.service";
-serviceFile='/etc/systemd/system/goaccess.service;'
+serviceFile='/etc/systemd/system/goaccess.service';
 
 # Create our .service file
 sudo touch "$serviceFile";
@@ -57,7 +57,11 @@ Type=simple
 User=root 
 Group=root 
 Restart=always 
-ExecStart=/usr/local/bin/goaccessreport 
+EOF
+
+sudo echo "ExecStart=${goaccessScript}"
+
+sudo cat <<EOF >> "$serviceFile"
 StandardOutput=null 
 StandardError=null 
 [Install]
@@ -66,6 +70,15 @@ EOF
 
 # Make service file executable 
 sudo chmod +x "$serviceFile";
+
+# Start service
+sudo systemctl enable "$serviceFile";
+sudo systemctl start "$serviceFile";
+
+if [[ $? -ne 0 ]]; then
+  echo "Could not start goaccess.service";
+  exit 1;
+fi
 
 # Point Nginx at our report.html file (this is built off the root of our folder)
 NGINX_CONFIGURATION=$(cat <<'EOF'
