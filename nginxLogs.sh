@@ -73,7 +73,7 @@ sudo chmod +x "$serviceFile";
 
 # Start service
 sudo systemctl enable "$serviceFile";
-sudo systemctl start "$serviceFile";
+sudo systemctl start goaccess
 
 if [[ $? -ne 0 ]]; then
   echo "Could not start goaccess.service";
@@ -88,5 +88,5 @@ NGINX_CONFIGURATION=$(cat <<'EOF'
 EOF
 );
 
-echo "Point your nginx server at the new report.html file located in ${rootFolder}";
+echo "Point your Nginx server at the new report.html file located in ${rootFolder}";
 echo "$NGINX_CONFIGURATION";
