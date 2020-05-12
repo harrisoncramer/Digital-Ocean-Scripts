@@ -2,6 +2,7 @@
 
 usage() {
   echo "nginxLogs.sh [root_of_nginx_project]";
+  echo "for example, /sites/demo";
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -49,7 +50,7 @@ sudo touch "$serviceFile";
 
 sudo cat <<EOF >> "$serviceFile"
 [Unit]
-Description=Goaccess Web log Report For Site Example.com 
+Description=Goaccess Logs
 After=network.target
 
 [Service]
@@ -89,6 +90,9 @@ sudo htpasswd -c /etc/nginx/apache2/.htpasswd admin
 
 # Point Nginx at our report.html file (this is built off the root of our folder)
 NGINX_CONFIGURATION=$(cat <<'EOF'
+    
+    root DIRECTORY_WHERE_YOU_SAVED_REPORT.HTML # The compiled server directory
+
     location = /report.html {
       try_files $uri $uri/=404;
       auth_basic "Admin Area Only";
