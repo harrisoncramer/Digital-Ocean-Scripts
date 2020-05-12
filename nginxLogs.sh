@@ -80,11 +80,20 @@ if [[ $? -ne 0 ]]; then
   exit 1;
 fi
 
+echo "Configuring password protection for /logs route"
+sudo apt install apache2-utils -y
+
+# Prompt user for admin password to get access to /logs route
+sudo mkdir /etc/nginx/apache2;
+sudo htpasswd -c /etc/nginx/apache2/.htpasswd admin 
+
 # Point Nginx at our report.html file (this is built off the root of our folder)
 NGINX_CONFIGURATION=$(cat <<'EOF'
-  location = /logs {
-    return 307 /report.html;
-  }
+    location = /report.html {
+      try_files $uri $uri/=404;
+      auth_basic "Admin Area Only";
+      auth_basic_user_file  "/etc/nginx/apache2/.htpasswd";
+    }
 EOF
 );
 
