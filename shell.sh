@@ -16,15 +16,15 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 # Install powerline fonts
 git clone https://github.com/powerline/fonts.git
 cd fonts
+sudo ./install.sh
 
 # Change theme
-sed -i ’s/robbyrussell/agnoster/g’ ~/.zshrc
+sed -i 's/robbyrussell/agnoster/g' ~/.zshrc
  
 # Change prompt within Agnoster theme
-echo “prompt_context() { \
-  # Custom (Random emoji) \
+echo "prompt_context() { \
   EMOJI=(" 💫" ) \
-  prompt_segment black default "$EMOJI” \
-}” >> ~/.zshrc
+  prompt_segment black default "$EMOJI" \
+}" >> ~/.zshrc
 
 source ~/.zshrc
