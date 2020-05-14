@@ -24,6 +24,10 @@ echo "Configuring Nginx..."
 sudo apt-get update -qq
 sudo apt-get install nginx --yes
 
+echo "Adding Nginx configuration file"
+sudo rm /etc/nginx/nginx.conf
+sudo mv ./reference/nginx.conf /etc/nginx/nginx.conf
+
 if [[ $? -ne 0 ]]
 then
     echo "Nginx could not be installed."
