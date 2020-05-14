@@ -10,5 +10,4 @@ export NVM_DIR="$HOME/.nvm"
 
 nvm install 13.7.0 # Installs version of node.
 
-# Sources the new installation
-source ~/.zshrc
+echo "Source the new installation w/ ~/.zshrc"

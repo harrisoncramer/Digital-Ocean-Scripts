@@ -21,10 +21,15 @@ sudo ./install.sh
 # Change theme
 sed -i 's/robbyrussell/agnoster/g' ~/.zshrc
  
-# Change prompt within Agnoster theme
-echo "prompt_context() { \
-  EMOJI=(" 💫" ) \
-  prompt_segment black default "$EMOJI" \
-}" >> ~/.zshrc
+# Change prompt
+prompt=$(cat << 'EOF'
+prompt_context() {
+  # Custom (Random emoji)
+  emojis=("⚡️" "🔥" "💀" "👑" "😎" "🐸" "🐵" "🦄" "🌈" "🍻" "💡" "🎉" "🔑" "🇹🇭" "🚦" "🌙")
+  RAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))
+  prompt_segment black default "${emojis[$RAND_EMOJI_N]} "
+}
+EOF
+)
 
-source ~/.zshrc
+echo "$prompt" >> ~/.zshrc
