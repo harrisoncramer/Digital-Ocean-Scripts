@@ -1,13 +1,13 @@
 #!/bin/bash
-if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 
+if [[ $EUID -eq 0 ]]; then
+   echo "This script should not be run as root." 
    exit 1
 fi
 
 
 # Install ZSH and make it default shell
 sudo apt install zsh -y
-chsh -s $(which zsh)
+sudo chsh -s $(which zsh)
 touch ~/.zshrc
 
 # Install Oh-My-ZSH
