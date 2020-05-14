@@ -30,21 +30,21 @@ then
     exit 1
 fi
 
-sed -i "s/IP_ADDRESS/${IP_ADDRESS}/g" my_server;
+sed -i "s/IP_ADDRESS/${IP_ADDRESS}/g" ./reference/my_server;
 if [[ $? -ne 0 ]]
 then
     echo "IP_ADDRESS ${IP_ADDRESS} could not be added to my_server."
     exit 1
 fi
 
-sed -i "s/DOMAIN/${2}/g" my_server;
+sed -i "s/DOMAIN/${2}/g" ./reference/my_server;
 if [[ $? -ne 0 ]]
 then
     echo "DOMAIN ${DOMAIN} could not be added to my_server"
     exit 1
 fi
 
-sed -i "s/PORT/${3}/g" my_server;
+sed -i "s/PORT/${3}/g" ./reference/my_server;
 if [[ $? -ne 0 ]]
 then
     echo "PORT ${PORT} could not be added to my_server"
@@ -52,7 +52,7 @@ then
 fi
 
 # Move to folder and create symlink...
-sudo mv my_server /etc/nginx/sites-available/my_server # Move new file into nginx's server directory...
+sudo mv reference/my_server /etc/nginx/sites-available/my_server # Move new file into nginx's server directory...
 cd /etc/nginx/sites-enabled
 sudo ln -s ../sites-available/my_server
 
