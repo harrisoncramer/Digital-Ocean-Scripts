@@ -1,8 +1,9 @@
 #!/bin/bash
+echo "Installing HTACCESS and GOACCESS"
 
 usage() {
-  echo "nginxLogs.sh [root_of_nginx_project]";
-  echo "for example, /sites/demo";
+  echo "nginxLogs.sh [www_root_folder]";
+  echo "for example, /var/www/dcdocs.app is where the report.html file will go";
 }
 
 if [[ $EUID -ne 0 ]]; then
@@ -31,75 +32,29 @@ if [[ "$isGoaccessInstalledNow" -eq "0" ]]; then
   exit 1;
 fi
 
-# Create goaccess.sh script and make executable
-echo "Creating goaccessScript.sh at /etc/nginx/goaccessScript.sh";
-goaccessScript='/etc/nginx/goaccessScript.sh';
-sudo touch "$goaccessScript";
-sudo chmod +x "$goaccessScript";
+echo "Creating root folder at /var/www/$rootFolder"
+sudo mkdir "/var/www/$rootFolder";
 
-# Write script
-sudo echo '#!/bin/bash' >> "$goaccessScript";
-sudo echo "sudo goaccess /var/log/nginx/access.log -o "${rootFolder}/report.html" --log-format=COMBINED --real-time-html" >> "$goaccessScript";
+echo "Configuring goaccess configuration at /etc/goaccess.conf"
 
-# Adding systemd log script
-echo "Creating goaccess.service at /etc/systemd/system/goaccess.service";
-serviceFile='/etc/systemd/system/goaccess.service';
+# Configuring goaccesss config file for Nginx
+sudo sed -i 's/#time-format %H:%M:%S/time-format %H:%M:%S/' /etc/goaccess.conf
+sudo sed -i 's;#date-format %d/%b/%Y;date-format %d/%b/%Y;' /etc/goaccess.conf
+sudo sed -i 's/#log-format COMBINED/log-format COMBINED/' /etc/goaccess.conf
+sudo sed -i 's/#html-report-title My Awesome Web Stats/html-report-title Stats/' /etc/goaccess.conf
+sudo sed -i 's;#log-file /var/log/apache2/access.log;log-file /var/log/nginx/access.log;' /etc/goaccess.conf
+sudo sed -i "s;#output-format /path/file.html;/var/www/$rootFolder/gopanel/"
 
-# Create our .service file
-sudo touch "$serviceFile";
-
-sudo cat <<EOF >> "$serviceFile"
-[Unit]
-Description=Goaccess Logs
-After=network.target
-
-[Service]
-Type=simple 
-User=root 
-Group=root 
-Restart=always 
-EOF
-
-sudo echo "ExecStart=${goaccessScript}" >> "$serviceFile";
-
-sudo cat <<EOF >> "$serviceFile"
-StandardOutput=null 
-StandardError=null 
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Make service file executable 
-sudo chmod +x "$serviceFile";
-
-# Start service
-sudo systemctl enable "$serviceFile";
-sudo systemctl start goaccess
-
-if [[ $? -ne 0 ]]; then
-  echo "Could not start goaccess.service";
-  exit 1;
-fi
-
-echo "Configuring password protection for /logs route"
+echo "Installing htaccess and adding 'admin' role"
 sudo apt install apache2-utils -y
 
 # Prompt user for admin password to get access to /logs route
 sudo mkdir /etc/nginx/apache2;
 sudo htpasswd -c /etc/nginx/apache2/.htpasswd admin 
 
-# Point Nginx at our report.html file (this is built off the root of our folder)
-NGINX_CONFIGURATION=$(cat <<'EOF'
-    
-    root DIRECTORY_WHERE_YOU_SAVED_REPORT.HTML # The compiled server directory
-
-    location = /report.html {
-      try_files $uri $uri/=404;
-      auth_basic "Admin Area Only";
-      auth_basic_user_file  "/etc/nginx/apache2/.htpasswd";
-    }
-EOF
-);
-
-echo "Point your Nginx server at the new report.html file located in ${rootFolder}";
-echo "$NGINX_CONFIGURATION";
+echo "1) Create an 'A Record' pointing to goaccess.THE_URL.app subdomain"
+echo "2) Expand the letsencyrpt signature to include the new subdomain (letsencrypt --expand)"
+echo "3) Follow the instructions in this blog to create a new Nginx Server bloc, and systemd configuration to run goaccess (https://bytes.fyi/real-time-goaccess-reports-with-nginx/)"
+echo "4) Note, the systemd file needs to be modified, to point correctly at goaccess, report.html, and nginx logs"
+echo "4) Make sure the new server block has the LetsEncrypt records"
+echo "5) Configure htaccess for the new nginx server, w/ htaccess file located at /etc/nginx/apache2/.htpasswd (https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04)"
