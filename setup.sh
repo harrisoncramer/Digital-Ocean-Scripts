@@ -67,4 +67,6 @@ then
   exit 1
 fi
 
+sudo usermod -s /bin/bash "${USER_NAME}"
+
 echo "User setup completed. Make sure you change the user's shell to bash.... (chsh -s /bin/bash)"
