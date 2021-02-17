@@ -45,8 +45,8 @@ fi
 # Force the password to change on first login.
 passwd -e "${USER_NAME}" # Expire the password.
 
-echo "USERNAME IS: ${USER_NAME}";
-echo "***** PASSWORD IS: ${PASSWORD} *****";
+echo "USERNAME: ${USER_NAME}";
+echo "TEMPORARY PASSWORD: ${PASSWORD} *****";
 
 # Provide user with root privileges.
 sudo usermod -aG sudo "${USER_NAME}"
@@ -69,4 +69,4 @@ fi
 
 sudo usermod -s /bin/bash "${USER_NAME}"
 
-echo "User setup completed. Make sure you change the user's shell to bash.... (chsh -s /bin/bash)"
+echo "User setup completed. You may log in with username and temporary password."
