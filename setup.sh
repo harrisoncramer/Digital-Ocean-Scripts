@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Script sets up DigitalOcean Nginx Reverse Proxy Server
-# Can install MongoDB (optional), and Yarn.
+# Script sets up new user and sets temporary password, and gives that user sudo privileges.
+# Also sets user's default shell to bash. 
+# Working on Ubuntu servers, use elsewhere at own risk.
 
 usage(){
     echo "Usage: ${0} USERNAME" >&2
