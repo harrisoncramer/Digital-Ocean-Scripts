@@ -4,24 +4,9 @@
 # Can install MongoDB (optional), and Yarn.
 
 usage(){
-    echo "Usage: ${0} [-my] USERNAME" >&2
+    echo "Usage: ${0} USERNAME" >&2
     exit 1
 };
-
-while getopts my OPTION # The colon means that l requires an argument...
-do 
-    case ${OPTION} in
-        m) 
-            MONGODB="true" 
-            echo "Installing MongoDB: Yes"
-        ;;
-        y) 
-            YARN="true" 
-            echo "Installing Yarn: Yes"
-        ;;
-        ?) usage ;;
-    esac
-done
 
 shift $(( OPTIND -1 ));
 
