@@ -1,32 +1,13 @@
 #!/bin/bash
-usage(){
-    echo "${0} IP_ADDRESS DOMAIN PORT";
-    exit 1
-};
 
-# Modify and replace placeholders in my_server file.
-IP_ADDRESS="${1}"
-DOMAIN="${2}"
-PORT="${3}"
+# Install Nginx server
 
-if [[ $((PORT)) != $PORT ]]; then
-    echo "Port is not a number."
-    usage
-fi
+echo "Installing Nginx..."
 
-if [[ ! $IP_ADDRESS =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
-then
-    echo "IP Address is not valid."
-    usage
-fi
-
-echo "Configuring Nginx..."
-sudo apt-get update -qq
-sudo apt-get install nginx --yes
-
-echo "Adding Nginx configuration file"
-sudo rm /etc/nginx/nginx.conf
-sudo mv ./reference/nginx.conf /etc/nginx/nginx.conf
+sudo apt update
+sudo apt install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo systemctl start nginx
 
 if [[ $? -ne 0 ]]
 then
@@ -34,33 +15,6 @@ then
     exit 1
 fi
 
-sed -i "s/IP_ADDRESS/${IP_ADDRESS}/g" ./reference/my_server;
-if [[ $? -ne 0 ]]
-then
-    echo "IP_ADDRESS ${IP_ADDRESS} could not be added to my_server."
-    exit 1
-fi
-
-sed -i "s/DOMAIN/${2}/g" ./reference/my_server;
-if [[ $? -ne 0 ]]
-then
-    echo "DOMAIN ${DOMAIN} could not be added to my_server"
-    exit 1
-fi
-
-sed -i "s/PORT/${3}/g" ./reference/my_server;
-if [[ $? -ne 0 ]]
-then
-    echo "PORT ${PORT} could not be added to my_server"
-    exit 1
-fi
-
-# Move to folder and create symlink...
-sudo mv reference/my_server /etc/nginx/sites-available/my_server # Move new file into nginx's server directory...
-cd /etc/nginx/sites-enabled
-sudo ln -s ../sites-available/my_server
-
-# Configure firewall
 sudo ufw allow ssh
 
 if [[ "${?}" -ne 0 ]]
@@ -79,7 +33,7 @@ then
     exit 1
 fi
 
-sudo ufw enable # Turn on firewall...
+sudo ufw enable 
 
 # Remove old server block and symlink...
 sudo rm /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
