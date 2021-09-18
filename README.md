@@ -24,6 +24,9 @@ db.createUser({ user: 'admin', pwd: 'supersecret', roles: [{ role: 'userAdminAny
 # ssh.sh
 Creates a new SSH key and adds it to the ssh-agent. You must manually then <a href="https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account">add the keys</a> to your Github account.
 
+# nginx
+Starts an Nginx server, starts the firewall, and allows HTTP/HTTPS traffic into the server.
+
 # packages.sh 
 This is a collection of useful applications for development on the Ubuntu server. It includes:
 1. Yarn
