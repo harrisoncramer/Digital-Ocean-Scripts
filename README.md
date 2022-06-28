@@ -1,4 +1,4 @@
-These scripts set up an environment for a node server running on Ubuntu 18.04 on Digital Ocean. They should be run in order. The scripts assume you are running Ubuntu 18.04, and have not configured anything on the machine. You can clone this to the machine using HTTPS, because your SSH keys will not be configured.
+Utility scripts for configuring an EC2 instance (Ubuntu)
 
 # setup.sh
 
@@ -6,11 +6,11 @@ Setup creates a user, provides the user with sudo privileges, and sets an automa
 
 # shell.sh
 
-Configures ZSH as user's shell w/ oh-my-zsh installed and agnoster theme.
+Configures ZSH as user's shell w/ oh-my-zsh installed.
 
 # docker.sh
 
-Installs docker on Ubuntu machines.
+Installs Docker and docker-compose.
 
 # node.sh
 
