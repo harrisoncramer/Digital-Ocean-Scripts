@@ -76,4 +76,3 @@ sudo ln -sf /etc/nginx/sites-available/my_domain /etc/nginx/sites-enabled/my_dom
 sudo systemctl reload nginx
 
 echo "Nginx successfully configured, reverse proxying HTTP traffic to Port 3000."
-rm "${0}"
