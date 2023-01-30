@@ -4,8 +4,8 @@
 
 echo "Installing Nginx..."
 
-sudo apt -y update
-sudo apt -y upgrade
+sudo apt update -y
+sudo apt upgrade -y
 sudo apt install -y nginx
 sudo systemctl start nginx
 
