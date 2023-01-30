@@ -67,7 +67,6 @@ server {
         include proxy_params;
     }
 }
-sudo cat 
 EOT
 
 sudo ln -sf /etc/nginx/sites-available/my_domain /etc/nginx/sites-enabled/my_domain
