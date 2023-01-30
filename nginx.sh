@@ -3,7 +3,8 @@
 # Install Nginx server
 
 echo "Installing Nginx..."
-export NEEDRESTART_MODE=a
+
+sed -i "/#\$nrconf{restart} = 'i';/s/.*/\$nrconf{restart} = 'a';/" /etc/needrestart/needrestart.conf
 
 sudo apt update -y
 sudo apt upgrade -y
