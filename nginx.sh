@@ -5,7 +5,7 @@
 echo "Installing Nginx..."
 
 sudo apt update -y
-sudo apt upgrade -y
+NEEDRESTART_MODE=a sudo apt upgrade -y
 sudo apt install -y nginx
 sudo systemctl start nginx
 
