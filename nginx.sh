@@ -3,9 +3,10 @@
 # Install Nginx server
 
 echo "Installing Nginx..."
+export NEEDRESTART_MODE=a
 
 sudo apt update -y
-NEEDRESTART_MODE=a sudo apt upgrade -y
+sudo apt upgrade -y
 sudo apt install -y nginx
 sudo systemctl start nginx
 
