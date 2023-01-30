@@ -33,3 +33,5 @@ EOF
 )
 
 echo "$prompt" >> ~/.zshrc
+
+chsh -s /bin/zsh
