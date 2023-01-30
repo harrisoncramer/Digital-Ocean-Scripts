@@ -34,4 +34,4 @@ EOF
 
 echo "$prompt" >> ~/.zshrc
 
-chsh -s /bin/zsh
+sudo chsh -s $(which zsh) $(whoami)
