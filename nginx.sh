@@ -5,7 +5,7 @@
 echo "Installing Nginx..."
 
 sudo apt update
-sudo apt install nginx
+sudo apt install nginx -y
 sudo systemctl start nginx
 
 if [[ $? -ne 0 ]]
