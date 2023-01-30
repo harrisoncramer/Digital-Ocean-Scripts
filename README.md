@@ -1,12 +1,26 @@
 Utility scripts for configuring an EC2 instance (Ubuntu)
 
+## Quickstart
+
+Create an Ubuntu EC2 instance on AWS and SSH into it. Then curl each of these scripts.
+
 # setup.sh
 
 Setup creates a user, provides the user with sudo privileges, and sets an automatic password.
 
+```
+curl https://raw.githubusercontent.com/harrisoncramer/EC2-Scripts/master/setup.sh | sudo bash -s harrisoncramer
+```
+
+You will need to log out and log back in for the changes to take effect as the new user.
+
 # shell.sh
 
 Configures ZSH as user's shell w/ oh-my-zsh installed.
+
+```
+curl https://raw.githubusercontent.com/harrisoncramer/EC2-Scripts/master/shell.sh | bash -s
+```
 
 # docker.sh
 
@@ -23,6 +37,10 @@ Creates a new SSH key and adds it to the ssh-agent. You must manually then <a hr
 # nginx
 
 Starts an Nginx server, starts the firewall, and allows HTTP/HTTPS traffic into the server. Turn <a href="https://docs.mongodb.com/manual/tutorial/enable-authentication/">on authorization</a> for the server.
+
+```
+curl https://raw.githubusercontent.com/harrisoncramer/EC2-Scripts/master/nginx.sh | sudo bash -s
+```
 
 # packages.sh
 
