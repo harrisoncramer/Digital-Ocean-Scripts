@@ -6,7 +6,6 @@ echo "Installing Nginx..."
 
 sudo apt update
 sudo apt install nginx
-sudo ufw allow 'Nginx HTTP'
 sudo systemctl start nginx
 
 if [[ $? -ne 0 ]]
@@ -52,8 +51,27 @@ then
     exit 1
 fi
 
+
+sudo touch /etc/nginx/sites-available/my_domain
+sudo cat <<EOT > /etc/nginx/sites-available/my_domain
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name my_domain;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        include proxy_params;
+    }
+}
+sudo cat 
+EOT
+
+sudo ln -sf /etc/nginx/sites-available/my_domain /etc/nginx/sites-enabled/my_domain
+
 # Reload settings
 sudo systemctl reload nginx
 
-echo "Nginx successfully configured."
+echo "Nginx successfully configured, reverse proxying HTTP traffic to Port 3000."
 rm "${0}"
