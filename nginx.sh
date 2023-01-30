@@ -34,7 +34,7 @@ then
     exit 1
 fi
 
-sudo ufw --force enable
+yes | sudo ufw enable
 
 # Remove old server block and symlink...
 sudo rm /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
